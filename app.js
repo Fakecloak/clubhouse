@@ -17,17 +17,8 @@ app.use(express.urlencoded({extended:true}));
 const authRouter = require("./routes/authRouter");
 app.use("/auth", authRouter);
 
-// const messageRouter = require("./routes/messageRouter");
-// app.use("/msg", messageRouter);
-
-
-
-
-
-
-
-
-
+const messageRouter = require("./routes/messageRouter");
+app.use("/msg", messageRouter);
 
 const port = 3000
 app.get('/', (req, res) => {

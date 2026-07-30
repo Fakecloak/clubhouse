@@ -1,4 +1,39 @@
+const bcrypt = require("bcrypt");
+const db = require("../db/queries");
+
+
 exports.signUpGet = (req, res ) => {
     res.render("sign-up");
-
 }
+
+exports.signUpPost = async (req,res,next) => {
+    try {
+        const {
+        firstName,
+        lastName,
+        email,
+        password,
+        } = req.body;
+
+        const existingUser = await db.getUserByEmail(email);
+
+        if (existingUser) {
+            res.send("Email already exists")
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await db.createUser({
+            firstName,
+            lastName,
+            email,
+            password: hashedPassword,
+        });
+
+        res.redirect("/auth/login");
+
+    } catch(err) {
+        next(err)
+    }
+
+};
