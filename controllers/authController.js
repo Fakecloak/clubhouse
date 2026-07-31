@@ -3,7 +3,7 @@ const db = require("../db/queries");
 
 
 exports.signUpGet = (req, res ) => {
-    res.render("sign-up");
+    res.render("./auth/sign-up");
 }
 
 exports.signUpPost = async (req,res,next) => {
@@ -30,10 +30,14 @@ exports.signUpPost = async (req,res,next) => {
             password: hashedPassword,
         });
 
-        res.redirect("/auth/login");
+        res.redirect("./auth/login");
 
     } catch(err) {
         next(err)
     }
 
 };
+
+exports.loginGet = (req, res) => {
+    res.render("./auth/login");
+}
