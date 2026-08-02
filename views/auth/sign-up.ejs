@@ -8,25 +8,28 @@
 
 <h1>Sign Up</h1>
 
-<%- include('errors') %>
+<%- include('../errors') %>
 <form action="/auth/sign-up" method="POST">
 
     <input
         type="text"
         name="firstName"
         placeholder="First Name"
+        value="<%= formData?.firstName || '' %>"
     >
 
     <input
         type="text"
         name="lastName"
         placeholder="Last Name"
+        value="<%= formData?.lastName || '' %>"
     >
 
     <input
         type="email"
         name="email"
         placeholder="Email"
+        value="<%= formData?.email || '' %>"
     >
 
     <input

@@ -3,7 +3,7 @@ const db = require("../db/queries");
 const { validationResult } = require("express-validator");
 
 exports.signUpGet = (req, res ) => {
-    res.render("./auth/sign-up");
+    res.render("./auth/sign-up", {errors: [], formData: {} });
 }
 
 exports.signUpPost = async (req,res,next) => {
@@ -11,8 +11,9 @@ exports.signUpPost = async (req,res,next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-    return res.status(400).render("sign-up", {
+    return res.status(400).render("auth/sign-up", {
         errors: errors.array(),
+        formData: req.body,
     });
     }
     
@@ -48,5 +49,5 @@ exports.signUpPost = async (req,res,next) => {
 };
 
 exports.loginGet = (req, res) => {
-    res.render("./auth/login");
+    res.render("./auth/login", {formData: {}, errors: [], });
 }
