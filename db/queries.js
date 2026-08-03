@@ -5,10 +5,10 @@ async function getUserByEmail(email) {
     return rows[0];
 }
 
-// async function getUserByEmail(userID) {
-//     const {rows} = await pool.query(`SELECT * FROM users WHERE id = $1`, [userID]);
-//     return rows[0];
-// }
+async function getUserByID(userID) {
+    const {rows} = await pool.query(`SELECT * FROM users WHERE id = $1`, [userID]);
+    return rows[0];
+}
 
 async function createUser(user) {
     const { firstName, lastName, email, password } = user;
@@ -18,4 +18,4 @@ async function createUser(user) {
     
 }
 
-module.exports = { getUserByEmail, createUser };
+module.exports = { getUserByEmail, getUserByID, createUser };
