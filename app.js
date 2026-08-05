@@ -46,7 +46,8 @@ app.use((req, res, next) => {
 // const indexRouter = require("./routes/indexRouter");
 
 app.get("/", (Req, res) => {
-  res.redirect("auth/login");
+  res.send("Welcome to the Clubhouse App! Please sign up or log in to continue.");
+  // res.redirect("auth/login");
 })
 
 const authRouter = require("./routes/authRouter");
