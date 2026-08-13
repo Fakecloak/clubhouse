@@ -1,10 +1,10 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const db = require("../db/queries");
 const { validationResult } = require("express-validator");
 const  passport = require("passport");
 
 exports.signUpGet = (req, res ) => {
-    res.render("./auth/sign-up", {errors: [], formData: {} });
+    res.render("auth/sign-up", {errors: [], formData: {} });
 }
 
 exports.signUpPost = async (req,res,next) => {
@@ -41,7 +41,7 @@ exports.signUpPost = async (req,res,next) => {
             password: hashedPassword,
         });
 
-        res.redirect("./auth/login");
+        res.redirect("/auth/login");
 
     } catch(err) {
         next(err)
@@ -50,7 +50,7 @@ exports.signUpPost = async (req,res,next) => {
 };
 
 exports.loginGet = (req, res) => {
-    res.render("./auth/login", {formData: {}, errors: [], });
+    res.render("auth/login", {formData: {}, errors: [], });
 }
 
 exports.loginPost = (req, res, next) => {

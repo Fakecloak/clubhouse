@@ -4,6 +4,8 @@
   "description": "A simple authentication-based web application built as part of **The Odin Project - Members Only** assignment. The project focuses on learning user authentication, authorization, sessions, and PostgreSQL integration using Node.js and Express.",
   "main": "app.js",
   "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +21,7 @@
   },
   "homepage": "https://github.com/Fakecloak/clubhouse#readme",
   "dependencies": {
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "connect-pg-simple": "^10.0.0",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
