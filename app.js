@@ -43,12 +43,10 @@ app.use((req, res, next) => {
 });
 
 //routes
-// const indexRouter = require("./routes/indexRouter");
+const indexRouter = require("./routes/indexRouter");
+app.use("/", indexRouter);
 
-app.get("/", (req, res) => {
-  res.render("index", { title: "Clubhouse App" });
-  // res.redirect("auth/login");
-})
+
 
 const authRouter = require("./routes/authRouter");
 app.use("/auth", authRouter);
