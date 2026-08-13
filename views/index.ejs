@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clubhouse</title>
+</head>
+
+<body>
+
+  <% if (currentUser) { %>
+
+    <h1>
+      Welcome <%= currentUser.first_name %>
+    </h1>
+
+    <p>You are logged in.</p>
+
+    <a href="/auth/logout">Logout</a>
+
+  <% } else { %>
+
+    <h1>Welcome to Clubhouse</h1>
+
+    <p>You are not logged in.</p>
+
+    <a href="/auth/login">Login</a>
+
+    <a href="/auth/sign-up">Sign Up</a>
+
+  <% } %>
+
+</body>
+</html>
