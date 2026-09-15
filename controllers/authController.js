@@ -51,7 +51,7 @@ exports.signUpPost = async (req,res,next) => {
 
 exports.loginGet = (req, res) => {
     res.render("auth/login", {formData: {}, errors: [], });
-}
+};
 
 exports.loginPost = (req, res, next) => {
     passport.authenticate('local', { 

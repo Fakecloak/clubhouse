@@ -3,5 +3,5 @@ exports.ensureAuthenticated = (req, res, next) => {
     return next();
   }
 
-  res.redirect("/auth/log-in");
+  res.redirect("/auth/login");
 };
