@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Clubhouse</title>
-</head>
+<h1>Clubhouse</h1>
 
-<body>
+<% if (messages.length === 0) { %>
+  <p>No messages yet.</p>
+<% } %>
 
-  <% if (currentUser) { %>
+<% messages.forEach(message => { %>
+  <article>
+    <h2><%= message.title %></h2>
 
-    <h1>
-      Welcome <%= currentUser.first_name %>
-    </h1>
+    <p><%= message.message %></p>
 
-    <p>You are logged in.</p>
-
-    <a href="/auth/logout">Logout</a>
-
-  <% } else { %>
-
-    <h1>Welcome to Clubhouse</h1>
-
-    <p>You are not logged in.</p>
-
-    <a href="/auth/login">Login</a>
-
-    <a href="/auth/sign-up">Sign Up</a>
-
-  <% } %>
-
-</body>
-</html>
+    <% if (currentUser && currentUser.is_member) { %>
+      <small>
+        Posted by
+        <%= message.first_name %> <%= message.last_name %>
+        on
+        <%= message.created_at.toLocaleString() %>
+      </small>
+    <% } %>
+  </article>
+<% }) %>

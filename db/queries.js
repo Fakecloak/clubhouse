@@ -27,4 +27,14 @@ async function createMessage( {title, message, user_id}) {
     );
 }
 
-module.exports = { getUserByEmail, getUserByID, createUser, createMessage };
+async function getAllMessages() {
+    const {rows} = await pool.query( 
+        `
+        SELECT messages.id, messages.title, messages.message, messages.created_at,
+        users.first_name, users.last_name 
+        FROM messages JOIN users ON messages.user_id = users.id
+        ORDER BY messages.created_at DESC`
+    );
+    return rows;
+}
+module.exports = { getUserByEmail, getUserByID, createUser, createMessage, getAllMessages }; 
