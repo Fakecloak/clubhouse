@@ -37,4 +37,16 @@ async function getAllMessages() {
     );
     return rows;
 }
-module.exports = { getUserByEmail, getUserByID, createUser, createMessage, getAllMessages }; 
+
+async function makeUserMember(userId) {
+    await pool.query(
+        `
+        UPDATE users 
+        SET is_member = TRUE
+        WHERE id = $1
+    `,
+    [userId]
+    );
+}
+
+module.exports = { getUserByEmail, getUserByID, createUser, createMessage, getAllMessages, makeUserMember }; 
