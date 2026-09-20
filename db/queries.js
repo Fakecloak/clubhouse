@@ -49,4 +49,15 @@ async function makeUserMember(userId) {
     );
 }
 
-module.exports = { getUserByEmail, getUserByID, createUser, createMessage, getAllMessages, makeUserMember }; 
+async function makeUserAdmin(userId) {
+    await pool.query(
+        `
+        UPDATE users
+        SET is_admin = TRUE
+        WHERE id = $1
+        `,
+    [userId]
+    );
+}
+
+module.exports = { getUserByEmail, getUserByID, createUser, createMessage, getAllMessages, makeUserMember, makeUserAdmin }; 

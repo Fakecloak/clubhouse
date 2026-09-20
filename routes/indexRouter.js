@@ -9,4 +9,7 @@ indexRouter.get("/", indexController.indexGet);
 indexRouter.get("/join", ensureAuthenticated, indexController.joinGet);
 indexRouter.post("/join", ensureAuthenticated, indexController.joinPost);
 
+indexRouter.get("/admin", ensureAuthenticated, indexController.adminGet);
+indexRouter.post("/admin", ensureAuthenticated, indexController.adminPost);
+
 module.exports = indexRouter;

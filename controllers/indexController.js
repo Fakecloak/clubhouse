@@ -33,3 +33,26 @@ exports.joinPost = async(req,res,next) => {
         next(err);
     }
 }
+
+exports.adminGet = (req, res) => {
+    res.render("admin", {title: "Welcome Admin", errors: []});
+}
+
+exports.adminPost = async(req,res,next) => {
+    try{
+        const {passcode} = req.body;
+
+        if(passcode !== process.env.ADMIN_PASSCODE)
+        {
+            return res.status(400).render("admin", {
+                errors: [{msg: "Incorrect Admin Passcode"}],
+            });
+        }
+
+        await db.makeUserAdmin(req.user.id);
+        res.redirect("/");
+
+    } catch(err){
+        next(err);
+    }
+}
