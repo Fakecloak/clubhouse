@@ -15,3 +15,15 @@ exports.createMessagePost = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteMessagePost = async (req, res, next) => {
+  try{
+    const messageId = req.params.id;
+
+    await db.deleteMessage(messageId);
+
+    res.redirect("/");
+  }catch(err) {
+    next(err);
+  }
+};

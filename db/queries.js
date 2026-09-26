@@ -60,4 +60,14 @@ async function makeUserAdmin(userId) {
     );
 }
 
-module.exports = { getUserByEmail, getUserByID, createUser, createMessage, getAllMessages, makeUserMember, makeUserAdmin }; 
+async function deleteMessage(msgId) {
+    await pool.query(
+        `
+        DELETE FROM messages
+        WHERE id = $1
+        `,
+        [msgId]
+    );
+}
+
+module.exports = { getUserByEmail, getUserByID, createUser, createMessage, getAllMessages, makeUserMember, makeUserAdmin, deleteMessage }; 

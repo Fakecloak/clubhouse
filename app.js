@@ -46,8 +46,6 @@ app.use((req, res, next) => {
 const indexRouter = require("./routes/indexRouter");
 app.use("/", indexRouter);
 
-
-
 const authRouter = require("./routes/authRouter");
 app.use("/auth", authRouter);
 
