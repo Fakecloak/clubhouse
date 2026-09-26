@@ -18,5 +18,11 @@
         <%= message.created_at.toLocaleString() %>
       </small>
     <% } %>
+
+    <% if (currentUser && currentUser.is_admin) { %>
+      <form action="/msg/<%= message.id %>/delete" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    <% } %>
   </article>
 <% }) %>
