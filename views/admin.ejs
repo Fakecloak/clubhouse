@@ -3,37 +3,190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Access</title>
+
+  <title>Admin Access · Clubhouse</title>
+
+  <link rel="stylesheet" href="/css/output.css">
 </head>
 
-<body>
+<body class="min-h-screen bg-slate-50 text-slate-900">
 
-  <h1>Become an Admin</h1>
+  <!-- Header -->
+  <header class="border-b border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
 
-  <% if (errors.length > 0) { %>
-    <ul>
-      <% errors.forEach(error => { %>
-        <li><%= error.msg %></li>
-      <% }) %>
-    </ul>
-  <% } %>
+      <a
+        href="/"
+        class="text-xl font-bold tracking-tight text-slate-900"
+      >
+        Clubhouse
+      </a>
 
-  <form action="/admin" method="POST">
+      <div class="flex items-center gap-2">
 
-    <label for="passcode">Admin Passcode</label>
+        <a
+          href="/"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+        >
+          Home
+        </a>
 
-    <input
-      type="password"
-      id="passcode"
-      name="passcode"
-      required
-    >
+        <a
+          href="/auth/logout"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-red-50 hover:text-red-600"
+        >
+          Log Out
+        </a>
 
-    <button type="submit">Become Admin</button>
+      </div>
 
-  </form>
+    </div>
+  </header>
 
-  <a href="/">Back</a>
+
+  <!-- Main -->
+  <main class="flex min-h-[calc(100vh-73px)] items-center justify-center px-4 py-12">
+
+    <div class="w-full max-w-md">
+
+      <!-- Heading -->
+      <div class="mb-8 text-center">
+
+        <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white">
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="h-7 w-7"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 3l7 4v5c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V7l7-4z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.5 12l1.7 1.7 3.5-3.5"
+            />
+          </svg>
+
+        </div>
+
+        <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+          Admin access
+        </h1>
+
+        <p class="mt-2 text-sm leading-6 text-slate-500">
+          Enter the admin passcode to enable administrator privileges.
+        </p>
+
+      </div>
+
+
+      <!-- Card -->
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+
+        <!-- Errors -->
+        <% if (errors && errors.length > 0) { %>
+
+          <div class="mb-6 rounded-xl border border-red-200 bg-red-50 p-4">
+
+            <p class="text-sm font-semibold text-red-800">
+              Unable to enable admin access
+            </p>
+
+            <ul class="mt-2 space-y-1 text-sm text-red-700">
+
+              <% errors.forEach(error => { %>
+
+                <li>
+                  • <%= error.msg %>
+                </li>
+
+              <% }) %>
+
+            </ul>
+
+          </div>
+
+        <% } %>
+
+
+        <form
+          action="/admin"
+          method="POST"
+          class="space-y-6"
+        >
+
+          <!-- Passcode -->
+          <div>
+
+            <label
+              for="passcode"
+              class="mb-2 block text-sm font-semibold text-slate-800"
+            >
+              Admin passcode
+            </label>
+
+            <input
+              type="password"
+              id="passcode"
+              name="passcode"
+              autocomplete="off"
+              required
+              placeholder="Enter admin passcode"
+              class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+            >
+
+            <p class="mt-2 text-xs leading-5 text-slate-400">
+              This passcode is provided by the Clubhouse administrator.
+            </p>
+
+          </div>
+
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+          >
+            Enable Admin Access
+          </button>
+
+        </form>
+
+
+        <!-- Info -->
+        <div class="mt-6 rounded-xl bg-slate-50 p-4">
+
+          <p class="text-xs leading-5 text-slate-500">
+            Administrator privileges allow you to remove messages from the Clubhouse.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Back -->
+      <div class="mt-6 text-center">
+
+        <a
+          href="/"
+          class="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+        >
+          ← Back to Clubhouse
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
 
 </body>
 </html>

@@ -3,29 +3,210 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join the Club</title>
+
+  <title>Join the Club · Clubhouse</title>
+
+  <link rel="stylesheet" href="/css/output.css">
 </head>
 
-<body>
+<body class="min-h-screen bg-slate-50 text-slate-900">
 
-  <h1>Join the Club</h1>
+  <!-- Header -->
+  <header class="border-b border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
 
-  <form action="/join" method="POST">
+      <a
+        href="/"
+        class="text-xl font-bold tracking-tight text-slate-900"
+      >
+        Clubhouse
+      </a>
 
-    <label for="passcode">Secret Passcode</label>
+      <div class="flex items-center gap-2">
 
-    <input
-      type="password"
-      id="passcode"
-      name="passcode"
-      required
-    >
+        <a
+          href="/"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+        >
+          Home
+        </a>
 
-    <button type="submit">Join</button>
+        <a
+          href="/auth/logout"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-red-50 hover:text-red-600"
+        >
+          Log Out
+        </a>
 
-  </form>
+      </div>
 
-  <a href="/">Back</a>
+    </div>
+  </header>
+
+
+  <!-- Main -->
+  <main class="flex min-h-[calc(100vh-73px)] items-center justify-center px-4 py-12">
+
+    <div class="w-full max-w-md">
+
+      <!-- Heading -->
+      <div class="mb-8 text-center">
+
+        <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white">
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="h-7 w-7"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"
+            />
+
+            <circle
+              cx="9"
+              cy="7"
+              r="4"
+            />
+
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19 8v6M22 11h-6"
+            />
+          </svg>
+
+        </div>
+
+        <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+          Join the Club
+        </h1>
+
+        <p class="mt-2 text-sm leading-6 text-slate-500">
+          Enter the secret passcode to become a Clubhouse member.
+        </p>
+
+      </div>
+
+
+      <!-- Card -->
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+
+        <!-- Errors -->
+        <% if (errors && errors.length > 0) { %>
+
+          <div class="mb-6 rounded-xl border border-red-200 bg-red-50 p-4">
+
+            <p class="text-sm font-semibold text-red-800">
+              Unable to join the club
+            </p>
+
+            <ul class="mt-2 space-y-1 text-sm text-red-700">
+
+              <% errors.forEach(error => { %>
+
+                <li>
+                  • <%= error.msg %>
+                </li>
+
+              <% }) %>
+
+            </ul>
+
+          </div>
+
+        <% } %>
+
+
+        <!-- Form -->
+        <form
+          action="/join"
+          method="POST"
+          class="space-y-6"
+        >
+
+          <div>
+
+            <label
+              for="passcode"
+              class="mb-2 block text-sm font-semibold text-slate-800"
+            >
+              Membership passcode
+            </label>
+
+            <input
+              type="password"
+              id="passcode"
+              name="passcode"
+              autocomplete="off"
+              required
+              placeholder="Enter membership passcode"
+              class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+            >
+
+            <p class="mt-2 text-xs leading-5 text-slate-400">
+              You need the private Clubhouse passcode to become a member.
+            </p>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+          >
+            Join Club
+          </button>
+
+        </form>
+
+
+        <!-- Benefits -->
+        <div class="mt-6 border-t border-slate-100 pt-6">
+
+          <p class="mb-3 text-sm font-semibold text-slate-800">
+            Membership includes
+          </p>
+
+          <ul class="space-y-2 text-sm text-slate-500">
+
+            <li class="flex items-center gap-2">
+              <span class="text-emerald-600">✓</span>
+              See who posted each message
+            </li>
+
+            <li class="flex items-center gap-2">
+              <span class="text-emerald-600">✓</span>
+              See message timestamps
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+
+      <!-- Back -->
+      <div class="mt-6 text-center">
+
+        <a
+          href="/"
+          class="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+        >
+          ← Back to Clubhouse
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
 
 </body>
 </html>
