@@ -1,28 +1,366 @@
-<h1>Clubhouse</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<% if (messages.length === 0) { %>
-  <p>No messages yet.</p>
-<% } %>
+  <title>Clubhouse</title>
 
-<% messages.forEach(message => { %>
-  <article>
-    <h2><%= message.title %></h2>
+  <link rel="stylesheet" href="/css/output.css">
+</head>
 
-    <p><%= message.message %></p>
+<body class="min-h-screen bg-slate-50 text-slate-900">
 
-    <% if (currentUser && currentUser.is_member) { %>
-      <small>
-        Posted by
-        <%= message.first_name %> <%= message.last_name %>
-        on
-        <%= message.created_at.toLocaleString() %>
-      </small>
-    <% } %>
+  <!-- Navbar -->
+  <nav class="border-b border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
 
-    <% if (currentUser && currentUser.is_admin) { %>
-      <form action="/msg/<%= message.id %>/delete" method="POST">
-        <button type="submit">Delete</button>
-      </form>
-    <% } %>
-  </article>
-<% }) %>
+      <!-- Logo -->
+      <a
+        href="/"
+        class="text-xl font-bold tracking-tight text-slate-900"
+      >
+        Clubhouse
+      </a>
+
+      <!-- Desktop / Mobile Navigation -->
+      <div class="flex items-center gap-2 sm:gap-4">
+
+        <% if (currentUser) { %>
+
+          <!-- Create Message -->
+          <a
+            href="/msg/new"
+            class="hidden rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700 sm:inline-block"
+          >
+            Create Message
+          </a>
+
+          <!-- Join Club -->
+          <% if (!currentUser.is_member) { %>
+            <a
+              href="/join"
+              class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+            >
+              Join Club
+            </a>
+          <% } %>
+
+          <!-- Become Admin -->
+          <% if (!currentUser.is_admin) { %>
+            <a
+              href="/admin"
+              class="hidden rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:inline-block"
+            >
+              Become Admin
+            </a>
+          <% } %>
+
+          <!-- User Status -->
+          <div class="hidden items-center gap-2 border-l border-slate-200 pl-4 md:flex">
+
+            <% if (currentUser.is_admin) { %>
+
+              <span class="rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold text-purple-700">
+                Admin
+              </span>
+
+            <% } else if (currentUser.is_member) { %>
+
+              <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                Member
+              </span>
+
+            <% } else { %>
+
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                Guest
+              </span>
+
+            <% } %>
+
+          </div>
+
+          <!-- Logout -->
+          <a
+            href="/auth/logout"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-red-50 hover:text-red-600"
+          >
+            Log Out
+          </a>
+
+        <% } else { %>
+
+          <!-- Logged Out -->
+          <a
+            href="/auth/login"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+          >
+            Log In
+          </a>
+
+          <a
+            href="/auth/sign-up"
+            class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
+          >
+            Sign Up
+          </a>
+
+        <% } %>
+
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- Main -->
+  <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+
+    <!-- Hero -->
+    <section class="mb-10">
+
+      <% if (currentUser) { %>
+
+        <div class="flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+
+          <div class="max-w-2xl">
+
+            <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-slate-500">
+              Welcome back
+            </p>
+
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              <%= currentUser.first_name %>
+            </h1>
+
+            <p class="mt-3 text-base leading-7 text-slate-600">
+              Share your thoughts with the Clubhouse community.
+            </p>
+
+          </div>
+
+          <div>
+
+            <a
+              href="/msg/new"
+              class="inline-flex items-center rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+            >
+              Create a Message
+            </a>
+
+          </div>
+
+        </div>
+
+      <% } else { %>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+
+          <div class="max-w-2xl">
+
+            <p class="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">
+              Welcome to Clubhouse
+            </p>
+
+            <h1 class="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+              A place to share your thoughts.
+            </h1>
+
+            <p class="mt-5 text-lg leading-8 text-slate-600">
+              Join the community, create messages, and connect with other members.
+            </p>
+
+            <div class="mt-7 flex flex-wrap gap-3">
+
+              <a
+                href="/auth/sign-up"
+                class="rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+              >
+                Create Account
+              </a>
+
+              <a
+                href="/auth/log-in"
+                class="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                Log In
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      <% } %>
+
+    </section>
+
+
+    <!-- Messages Section -->
+    <section>
+
+      <div class="mb-6 flex items-end justify-between">
+
+        <div>
+
+          <p class="text-sm font-semibold uppercase tracking-wider text-slate-500">
+            Community
+          </p>
+
+          <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">
+            Messages
+          </h2>
+
+        </div>
+
+        <% if (currentUser) { %>
+
+          <a
+            href="/msg/new"
+            class="text-sm font-semibold text-slate-700 hover:text-slate-900"
+          >
+            New message →
+          </a>
+
+        <% } %>
+
+      </div>
+
+
+      <!-- No Messages -->
+      <% if (messages.length === 0) { %>
+
+        <div class="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+
+          <h3 class="text-lg font-semibold text-slate-900">
+            No messages yet
+          </h3>
+
+          <p class="mt-2 text-sm text-slate-500">
+            Be the first person to post something.
+          </p>
+
+          <% if (currentUser) { %>
+
+            <a
+              href="/msg/new"
+              class="mt-5 inline-flex rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700"
+            >
+              Create Message
+            </a>
+
+          <% } %>
+
+        </div>
+
+      <% } %>
+
+
+      <!-- Messages -->
+      <div class="space-y-4">
+
+        <% messages.forEach(message => { %>
+
+          <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+
+            <!-- Message Header -->
+            <div class="flex items-start justify-between gap-4">
+
+              <div class="min-w-0">
+
+                <h3 class="break-words text-xl font-semibold text-slate-900">
+                  <%= message.title %>
+                </h3>
+
+              </div>
+
+              <!-- Admin Delete -->
+              <% if (currentUser && currentUser.is_admin) { %>
+
+                <form
+                  action="/msg/<%= message.id %>/delete"
+                  method="POST"
+                  class="shrink-0"
+                >
+
+                  <button
+                    type="submit"
+                    class="rounded-lg border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-50"
+                  >
+                    Delete
+                  </button>
+
+                </form>
+
+              <% } %>
+
+            </div>
+
+
+            <!-- Message Body -->
+            <p class="mt-4 whitespace-pre-wrap break-words text-sm leading-7 text-slate-600">
+              <%= message.message %>
+            </p>
+
+
+            <!-- Member Information -->
+            <% if (currentUser && currentUser.is_member) { %>
+
+              <div class="mt-6 flex items-center gap-2 border-t border-slate-100 pt-4 text-xs text-slate-500">
+
+                <span class="font-medium text-slate-700">
+                  <%= message.first_name %> <%= message.last_name %>
+                </span>
+
+                <span>•</span>
+
+                <span>
+                  <%= message.created_at.toLocaleString() %>
+                </span>
+
+              </div>
+
+            <% } else { %>
+
+              <div class="mt-6 border-t border-slate-100 pt-4">
+
+                <p class="text-xs text-slate-400">
+                  Become a member to see who posted this message.
+                </p>
+
+              </div>
+
+            <% } %>
+
+          </article>
+
+        <% }) %>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="mt-16 border-t border-slate-200 bg-white">
+
+    <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+
+      <p>
+        © <%= new Date().getFullYear() %> Clubhouse
+      </p>
+
+      <p>
+        Built with Node.js, Express, EJS & PostgreSQL
+      </p>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>

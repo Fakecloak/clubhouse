@@ -60,3 +60,13 @@ exports.loginPost = (req, res, next) => {
         failureMessage: true 
     })(req, res, next);
 };
+
+exports.logoutGet = (req, res, next) => {
+    req.logout((err) => {
+        if(err) {
+            return next (err);
+        }
+
+        res.redirect('/auth/login');
+    });
+;}

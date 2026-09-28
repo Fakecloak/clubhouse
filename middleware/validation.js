@@ -13,4 +13,9 @@ const validateSignUp = [
     }),
 ];
 
-module.exports = {validateSignUp};
+const validateMessage = [
+    body("message").notEmpty().trim().withMessage("Message is required"),
+    body("title").notEmpty().trim().withMessage("Title is required").isLength({max:255}),
+]
+
+module.exports = {validateSignUp, validateMessage};

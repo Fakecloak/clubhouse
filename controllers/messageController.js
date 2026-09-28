@@ -1,10 +1,19 @@
 const db = require("../db/queries");
+const { validationResult } = require("express-validator");
 
 exports.createMessageGet = (req, res) => {
-  res.render("messages/create");
+  res.render("messages/create", { errors: []});
 };
 
 exports.createMessagePost = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).render("messages/create",{
+      errors: errors.array(),
+    });
+  }
+
   try{
     const {title, message} = req.body;
 
